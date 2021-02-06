@@ -1,14 +1,14 @@
-export enum ScoreContainerState {
-    SCORE_CURRENT = 1,
-    SCORE_PROGRESS = 2,
-    SCORE_EDIT = 3,
+export enum ScoreViewState {
+    SCORE_CURRENT = "Current Score",
+    SCORE_PROGRESS = "Learning Progress",
+    SCORE_EDIT = "Update Score",
 }
-export interface t_skillScore  {
+export interface t_skillScore {
     skill: string,
     score: number
 }
 export interface t_userScore {
-    sprint: number,
-    scores: t_skillScore[],
+    sprint: string,
+    results: t_skillScore[],
     populated: boolean
 }

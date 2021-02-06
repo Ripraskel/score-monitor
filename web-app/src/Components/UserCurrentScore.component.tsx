@@ -1,41 +1,44 @@
-import * as React from 'react'
-import { Tooltip, ChartProvider, XAxis, YAxis, BarSeries } from 'rough-charts'
+import * as React from 'react';
+import { Chart } from 'react-google-charts';
 
-import { t_userScore } from '../Types/UserScore.Types';
+import { t_skillScore, t_userScore } from '../Types/UserScore.Types';
 
 interface currentScoreProps {
     data: t_userScore
 }
 
 function UserCurrentScore(props: currentScoreProps) {
-    console.log(props.data)
+    const graphData: any[] =[
+        [
+          'Skill',
+          `Score`,
+          {
+            sourceColumn: 0,
+            role: 'annotation',
+            type: 'string',
+            calc: 'stringify',
+          },
+        ]
+      ];
+    
+    props.data.results.forEach((skillScore: t_skillScore, index: number) => {
+        graphData.push([skillScore.skill, skillScore.score, null])
+    })
+
+    
     return (
         <div>
             <h1>{`Sprint ${props.data.sprint.toString()}`}</h1>
-            <ChartProvider
-                height={400}
-                data={props.data.scores}
-            >
-                <XAxis dataKey="skill" options={{fillStyle: "hachure", fill: "red"}} />
-                <YAxis  tickSize={5} tickCount={5}/>
-                <BarSeries
-                    dataKey="score"
-                    options={{
-                        stroke: "red",
-                        strokeWidth: 1,
-                        fill: "red"
-                    }}
-                />
-                {/* <BarSeries
-                    dataKey="value2"
-                    options={{
-                        stroke: "blue",
-                        strokeWidth: 1,
-                        fill: "none"
-                    }}
-                /> */}
-                <Tooltip />
-            </ChartProvider>
+            <Chart
+                width={'500px'}
+                height={'300px'}
+                chartType="Bar"
+                loader={<div>Loading Chart</div>}
+                data={graphData}
+
+                // For tests
+                rootProps={{ 'data-testid': '2' }}
+            />
         </div>
     )
 }
