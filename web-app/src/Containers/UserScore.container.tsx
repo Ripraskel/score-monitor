@@ -4,7 +4,6 @@ import UserScoreProgress from '../Components/UserScoreProgress.component';
 import { ScoreViewState, t_userScore,  } from '../Types/UserScore.Types';
 
 
-
 const dummyScore: t_userScore[] = [
     {
         sprint: '0',
